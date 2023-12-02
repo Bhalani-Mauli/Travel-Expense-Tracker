@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page */
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("<h1>Hello I am Mauli</h1>");
+  res.status(200).send({ name: "Mauli" });
 });
 
 export default router;
