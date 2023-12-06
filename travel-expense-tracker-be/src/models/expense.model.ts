@@ -2,12 +2,14 @@ import { Schema, model } from "mongoose";
 
 const expenseSchema = new Schema({
   paidBy: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    type: Object,
     required: true,
-    trim: true,
   },
-  amount: {
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
+  amountPerUser: {
     type: Number,
     required: true,
   },
@@ -23,15 +25,6 @@ const expenseSchema = new Schema({
     ref: "Group",
     required: true,
   },
-  split: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-      splitAmount: Number,
-    },
-  ],
 });
 
 const Expense = model("Expense", expenseSchema);

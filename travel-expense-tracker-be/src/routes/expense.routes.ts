@@ -12,7 +12,17 @@ router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
       message: "The group does not exist",
     });
   }
-  Expense.find({ groupId: new ObjectId(id) })
+
+  Expense.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "paidBy",
+        foreignField: "_id",
+        as: "userInfo",
+      },
+    },
+  ])
     .then((dbExpenses) => {
       res.status(200).send(dbExpenses);
     })
@@ -26,15 +36,15 @@ router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
 });
 
 router.post("/", (req: Request, res: Response, next: NextFunction) => {
-  const { paidBy, amount, currency, description, groupId, split } = req.body;
-
+  const { paidBy, totalAmount, amountPerUser, currency, description, groupId } =
+    req.body;
   Expense.create({
     paidBy,
-    amount,
+    totalAmount,
+    amountPerUser,
     currency,
     description,
     groupId,
-    split,
   })
     .then((dbRes) => {
       res.status(200).send(dbRes);
