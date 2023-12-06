@@ -1,4 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+import User from "../models/User.model";
+import Group from "../models/Group.model";
+
+dotenv.config();
 
 const MONGO_URI: string = process.env.MONGODB_URI || "";
 
