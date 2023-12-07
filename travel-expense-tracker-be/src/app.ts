@@ -7,6 +7,8 @@ import handleErrors from "./error-handling";
 import indexRoutes from "./routes/index.routes";
 import expenseRoutes from "./routes/expense.routes";
 import userRoutes from "./routes/user.routes";
+import authRoutes from "./routes/auth.routes";
+import { isAuthenticated } from "./middleware/jwt.middleware";
 
 const app: Application = express();
 
@@ -24,6 +26,7 @@ app.locals.appTitle = projectName;
 app.use("/", indexRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 handleErrors(app);
