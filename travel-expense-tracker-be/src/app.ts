@@ -9,8 +9,10 @@ import expenseRoutes from "./routes/expense.routes";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import { isAuthenticated } from "./middleware/jwt.middleware";
+import cors from "cors";
 
 const app: Application = express();
+app.use(cors());
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 configureApp(app);
