@@ -7,7 +7,7 @@ const API_URL = import.meta.env.API_URL ?? "http://localhost:8080";
 
 const Signup = () => {
   const [email, setEmail] = useState<string>("");
-  const [passwordHash, setPasswordHash] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [username, setUserName] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -18,14 +18,14 @@ const Signup = () => {
   const handleEmail = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) =>
-    setPasswordHash(e.target.value);
+    setPassword(e.target.value);
   const handleName = (e: ChangeEvent<HTMLInputElement>) =>
     setUserName(e.target.value);
 
   const handleSignupSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const requestBody = { email, passwordHash, username };
+    const requestBody = { email, password, username };
 
     const headers = {
       "Access-Control-Allow-Origin": "*",
@@ -71,7 +71,7 @@ const Signup = () => {
           <Form.Control
             type="password"
             placeholder="Password"
-            value={passwordHash}
+            value={password}
             onChange={handlePassword}
           />
         </Form.Group>
