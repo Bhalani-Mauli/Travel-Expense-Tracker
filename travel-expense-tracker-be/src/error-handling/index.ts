@@ -3,7 +3,7 @@ import { Application, Request, Response, NextFunction } from "express";
 export default (app: Application): void => {
   app.use((req: Request, res: Response, next: NextFunction) => {
     // this middleware runs whenever the requested page is not available
-    res.status(404).render("not-found");
+    res.status(404).send({ error: "something went wrong" });
   });
 
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -13,7 +13,7 @@ export default (app: Application): void => {
 
     // only render if the error occurred before sending the response
     if (!res.headersSent) {
-      res.status(500).render("error");
+      res.status(500).send(err);
     }
   });
 };

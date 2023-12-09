@@ -1,13 +1,11 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
-const API_URL = "http://localhost:8080";
+const API_URL = import.meta.env.API_URL ?? "http://localhost:8080";
 
-interface SignupProps {}
-
-const Signup: React.FC<SignupProps> = () => {
+const Signup = () => {
   const [email, setEmail] = useState<string>("");
   const [passwordHash, setPasswordHash] = useState<string>("");
   const [username, setUserName] = useState<string>("");
@@ -40,8 +38,8 @@ const Signup: React.FC<SignupProps> = () => {
     } catch (error: any) {
       const axiosError = error as AxiosError<any>;
 
-      const errorDescription: string =
-        (axiosError.response?.data?.message as string) || "An error occurred";
+      const errorDescription =
+        axiosError.response?.data?.message || "An error occurred";
       setErrorMessage(errorDescription);
     }
   };
