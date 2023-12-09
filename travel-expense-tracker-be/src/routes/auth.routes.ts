@@ -11,9 +11,9 @@ const router = express.Router();
 const saltRounds = 10;
 
 router.post("/signup", (req: Request, res: Response, next: NextFunction) => {
-  const { email, passwordHash, username } = req.body;
+  const { email, password, username } = req.body;
 
-  if (email === "" || passwordHash === "" || username === "") {
+  if (email === "" || password === "" || username === "") {
     res.status(400).json({ message: "Provide email, password, and name" });
     return;
   }
@@ -25,7 +25,7 @@ router.post("/signup", (req: Request, res: Response, next: NextFunction) => {
   }
 
   const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-  if (!passwordRegex.test(passwordHash)) {
+  if (!passwordRegex.test(password)) {
     res.status(400).json({
       message:
         "Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter.",
@@ -41,19 +41,14 @@ router.post("/signup", (req: Request, res: Response, next: NextFunction) => {
       }
 
       const salt = bcrypt.genSaltSync(saltRounds);
-      const hashedPassword = bcrypt.hashSync(passwordHash, salt);
+      const hashedPassword = bcrypt.hashSync(password, salt);
 
       return User.create({ email, passwordHash: hashedPassword, username });
     })
-    .then((createdUser) => {
-      if (!createdUser) {
-        throw new Error("User not created");
-      }
-
-      const { _id, ...user } = createdUser.toObject();
+    .then((createdUser: any) => {
+      const { _id, ...user } = createdUser;
       res.status(201).json({ user });
     })
-
     .catch((err) => {
       console.error(err);
       res.status(500).json({ message: "Internal Server Error" });
@@ -61,13 +56,11 @@ router.post("/signup", (req: Request, res: Response, next: NextFunction) => {
 });
 
 // POST  /auth/login
-// ...
-
 router.post("/login", (req: Request, res: Response, next: NextFunction) => {
-  const { email, passwordHash } = req.body;
+  const { email, password } = req.body;
 
   // Check if email or password are provided as empty string
-  if (!email || !passwordHash) {
+  if (!email || !password) {
     res.status(400).json({ message: "Provide email and password." });
     return;
   }
@@ -83,7 +76,7 @@ router.post("/login", (req: Request, res: Response, next: NextFunction) => {
 
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(
-        passwordHash,
+        password,
         foundUser.passwordHash
       );
 
@@ -110,15 +103,20 @@ router.post("/login", (req: Request, res: Response, next: NextFunction) => {
     .catch((err) => res.status(500).json({ message: "Internal Server Error" }));
 });
 
-// GET  /auth/verify
-
+// GET  /auth/users example route // TODO: delete this
 router.get(
-  "/verify",
+  "/users",
   isAuthenticated,
   (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    console.log(`req.payload`, req.payload);
+    console.log(`req.payload`, req.payload.email);
 
-    res.status(200).json(req.payload);
+    User.find({ email: req.payload.email })
+      .then((dbRes) => {
+        res.status(200).json(dbRes);
+      })
+      .catch((err) => {
+        res.status(500).send(err);
+      });
   }
 );
 
