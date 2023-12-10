@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { AuthContext, AuthContextProps } from "../context/auth.context";
 
 export default function AppNavbar() {
-  const { isLoggedIn, user, logOutUser } = useContext<AuthContextProps>(
+  const { isLoggedIn, logOutUser } = useContext<AuthContextProps>(
     AuthContext
   ) || {
     isLoggedIn: false,

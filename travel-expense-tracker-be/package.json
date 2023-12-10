@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/server.js",
+    "deploy": "npm run build && npm run start",
     "dev": "nodemon server.ts",
     "test": "jest --coverage"
   },
