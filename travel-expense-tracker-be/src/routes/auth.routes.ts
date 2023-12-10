@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.model";
 import { isAuthenticated } from "../middleware/jwt.middleware";
 
-interface AuthenticatedRequest extends Request {
-  payload?: any; // Add the 'payload' property to the Request
+export interface AuthenticatedRequest extends Request {
+  payload?: { id: string; username: string; email: string }; // Add the 'payload' property to the Request
 }
 const router = express.Router();
 const saltRounds = 10;
@@ -102,22 +102,5 @@ router.post("/login", (req: Request, res: Response, next: NextFunction) => {
     })
     .catch((err) => res.status(500).json({ message: "Internal Server Error" }));
 });
-
-// GET  /auth/users example route // TODO: delete this
-router.get(
-  "/users",
-  isAuthenticated,
-  (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
-    console.log(`req.payload`, req.payload.email);
-
-    User.find({ email: req.payload.email })
-      .then((dbRes) => {
-        res.status(200).json(dbRes);
-      })
-      .catch((err) => {
-        res.status(500).send(err);
-      });
-  }
-);
 
 export default router;

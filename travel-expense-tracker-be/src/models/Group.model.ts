@@ -5,18 +5,21 @@ const groupSchema = new Schema(
     name: {
       type: String,
     },
-    members: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
+    members: {
+      type: Array,
+    },
+    split: {
+      type: Object,
+    },
+    total: {
+      type: Number,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const Group = model("Group", groupSchema);
+const Group = model("Groups", groupSchema);
 
 export default Group;
