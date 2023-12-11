@@ -5,6 +5,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Container from "react-bootstrap/Container";
 import LandingPage from "./pages/LandingPage";
+import Dashboard from "./pages/Dashboard";
+import CreateGroup from "./pages/CreateGroup";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Home" element={<LandingPage />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/CreateGroup" element={<CreateGroup />} />
         </Routes>
       </Container>
     </div>
