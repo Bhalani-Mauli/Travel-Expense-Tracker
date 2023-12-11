@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
 import CreateGroup from "./pages/CreateGroup";
+import Group from "./pages/Group";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Home" element={<LandingPage />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/CreateGroup" element={<CreateGroup />} />
+          <Route path="/Group" element={<Group />} />
         </Routes>
       </Container>
     </div>

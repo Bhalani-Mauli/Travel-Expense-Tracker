@@ -1,19 +1,6 @@
+import { Card } from "react-bootstrap";
 const GroupCard = () => {
   return (
-    // <Card>
-    //   <Card.Header>
-    //     <h5 className="mb-0">{groupName}</h5>
-    //   </Card.Header>
-    //   <Card.Body className="d-flex flex-column align-items-center">
-    //     <Button variant="success" className="mb-2">
-    //       Settled
-    //     </Button>
-    //     <Button variant="primary" className="mb-2">
-    //       Add Expense
-    //     </Button>
-    //     {/* Add any additional content as needed */}
-    //   </Card.Body>
-    // </Card>
     <div className="container mt-4">
       <div className="row">
         <div className="col-md-12 col-lg-6">
@@ -21,8 +8,13 @@ const GroupCard = () => {
             href="/dashboard/groups/view/6575bc32e41cc4beb3c96797"
             className="card-link"
           >
-            <div className="card">
-              <div className="card-body">
+            <Card
+              style={{
+                backgroundColor: "rgb(208, 242, 255)",
+                color: "rgb(4, 41, 122)",
+              }}
+            >
+              <Card.Body>
                 <span
                   className="iconify iconify--ic"
                   data-icon="mdi:account-group"
@@ -47,8 +39,8 @@ const GroupCard = () => {
                 >
                   Add Expense
                 </a>
-              </div>
-            </div>
+              </Card.Body>
+            </Card>
           </a>
         </div>
       </div>

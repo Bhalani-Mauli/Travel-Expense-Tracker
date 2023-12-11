@@ -29,6 +29,7 @@ export default function AppNavbar() {
         </Navbar.Brand>
         <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
         <Nav.Link href="/CreateGroup">Create Group</Nav.Link>
+        <Nav.Link href="/Group">Group</Nav.Link>
 
         {!isLoggedIn ? (
           <div>
