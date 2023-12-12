@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useContext } from "react";
 import { AuthContext, AuthContextProps } from "../context/auth.context";
@@ -26,6 +27,11 @@ export default function AppNavbar() {
           />
           Travel expense tracker
         </Navbar.Brand>
+        <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
+        <Nav.Link href="/CreateGroup">Create Group</Nav.Link>
+        <Nav.Link href="/Group">Group</Nav.Link>
+        <Nav.Link href="/home">Home</Nav.Link>
+
         {!isLoggedIn ? (
           <div>
             <NavLink to="/signup">
