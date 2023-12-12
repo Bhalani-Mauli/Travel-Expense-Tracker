@@ -30,6 +30,7 @@ export default function AppNavbar() {
         <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
         <Nav.Link href="/CreateGroup">Create Group</Nav.Link>
         <Nav.Link href="/Group">Group</Nav.Link>
+        <Nav.Link href="/home">Home</Nav.Link>
 
         {!isLoggedIn ? (
           <div>
