@@ -4,12 +4,13 @@ import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Container from "react-bootstrap/Container";
-import LandingPage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
 import CreateGroup from "./pages/CreateGroup";
 import Group from "./pages/Group";
 import AddExpense from "./pages/AddExpense";
 import HomePage from "./pages/HomePage";
+import IsPrivate from "./components/IsPrivate";
+import IsAnon from "./components/IsAnon";
 
 function App() {
   return (
@@ -17,13 +18,62 @@ function App() {
       <Navbar />
       <Container>
         <Routes>
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/createGroup" element={<CreateGroup />} />
-          <Route path="/group" element={<Group />} />
-          <Route path="/addExpense" element={<AddExpense />} />
+          <Route
+            path="/signup"
+            element={
+              <IsAnon>
+                <Signup />
+              </IsAnon>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <IsAnon>
+                <Login />
+              </IsAnon>
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <IsPrivate>
+                <HomePage />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <IsPrivate>
+                <Dashboard />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/createGroup"
+            element={
+              <IsPrivate>
+                <CreateGroup />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/group"
+            element={
+              <IsPrivate>
+                <Group />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/addExpense"
+            element={
+              <IsPrivate>
+                <AddExpense />
+              </IsPrivate>
+            }
+          />
         </Routes>
       </Container>
     </div>
