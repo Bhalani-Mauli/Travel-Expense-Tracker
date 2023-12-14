@@ -3,16 +3,10 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { useContext } from "react";
-import { AuthContext, AuthContextProps } from "../context/auth.context";
+import { useAuth } from "../context/auth.context";
 
 export default function AppNavbar() {
-  const { isLoggedIn, logOutUser } = useContext<AuthContextProps>(
-    AuthContext
-  ) || {
-    isLoggedIn: false,
-    logOutUser: () => {}, // Provide a default empty function for logOutUser
-  };
+  const { isLoggedIn, logOutUser } = useAuth();
 
   return (
     <Navbar className="bg-body-tertiary">
