@@ -29,16 +29,7 @@ router.get("/:id", (req: Request, res: Response, next: NextFunction) => {
     });
   }
 
-  Expense.aggregate([
-    {
-      $lookup: {
-        from: "users",
-        localField: "paidBy",
-        foreignField: "_id",
-        as: "userInfo",
-      },
-    },
-  ])
+  Expense.find({ groupId: id })
     .then((dbExpenses) => {
       res.status(200).send(dbExpenses);
     })
@@ -114,10 +105,10 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   const group = await Group.findById({ _id: groupId });
   if (!group) throw Error("Cannot find group");
   const splitMemberDb = group?.split;
-  group.total += totalAmount;
+  group.total! += +totalAmount;
   Object.keys(splitMemberDb).forEach((member) => {
-    if (member === paidBy.email) {
-      splitMemberDb[member] += totalAmount - amountPerUser;
+    if (member === paidBy) {
+      splitMemberDb[member] += +totalAmount - amountPerUser;
     } else {
       splitMemberDb[member] -= amountPerUser;
     }

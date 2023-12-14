@@ -14,13 +14,32 @@ router.get("/", isAuthenticated, (req: AuthenticatedRequest, res: Response) => {
       res.send(dbRes);
     })
     .catch((error) => {
-      console.log("/POST api/expenses failed due to ", error.message);
+      console.log("/POST api/groups failed due to ", error.message);
       res.status(500).send({
         title: "Error Occured",
         message: error.message || "Something went wrong",
       });
     });
 });
+
+router.get(
+  "/:id",
+  isAuthenticated,
+  (req: AuthenticatedRequest, res: Response) => {
+    const { id } = req.params;
+    Group.findById({ _id: id })
+      .then((dbRes) => {
+        res.send(dbRes);
+      })
+      .catch((error) => {
+        console.log("/POST api/groups failed due to ", error.message);
+        res.status(500).send({
+          title: "Error Occured",
+          message: error.message || "Something went wrong",
+        });
+      });
+  }
+);
 
 router.put(
   "/:id",
@@ -46,11 +65,14 @@ router.post(
   "/",
   isAuthenticated,
   (req: Request, res: Response, next: NextFunction) => {
+    console.log("hello world1--");
+
     const { name, members } = req.body;
     const split = members.reduce((acc: LooseObject, curr: string) => {
       acc[curr] = 0;
       return acc;
     }, {});
+    console.log("hello world");
 
     Group.create({
       name,
@@ -62,7 +84,7 @@ router.post(
         res.status(200).send(dbRes);
       })
       .catch((error) => {
-        console.log("/POST api/expenses failed due to ", error.message);
+        console.log("/POST api/groups failed due to ", error.message);
         res.status(500).send({
           title: "Error Occured",
           message: error.message || "Something went wrong",
