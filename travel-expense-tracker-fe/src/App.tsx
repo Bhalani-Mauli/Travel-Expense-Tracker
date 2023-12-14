@@ -11,6 +11,7 @@ import AddExpense from "./pages/AddExpense";
 import HomePage from "./pages/HomePage";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
+import SettleExpense from "./pages/SettleExpense";
 
 function App() {
   return (
@@ -71,6 +72,14 @@ function App() {
             element={
               <IsPrivate>
                 <AddExpense />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/settleExpense/:groupId"
+            element={
+              <IsPrivate>
+                <SettleExpense />
               </IsPrivate>
             }
           />

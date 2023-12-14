@@ -57,6 +57,12 @@ const getExpensesByGroup = (groupId: any) => {
   });
 };
 
+const settleExpense = (groupId: string, expenseData: ExpenseData) => {
+  return axios.post(`${API_URL}/settle/${groupId}`, expenseData, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 export {
   fetchGroups,
   addExpense,
@@ -65,4 +71,5 @@ export {
   signup,
   authVerify,
   getGroupById,
+  settleExpense,
 };

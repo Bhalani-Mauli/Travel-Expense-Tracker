@@ -9,7 +9,7 @@ interface GroupCardProps {
 
 const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
   const { user } = useAuth();
-  const owed = group.split[user.email];
+  const owed = group.split[user!.email];
 
   return (
     <div className="container mt-4">
@@ -49,6 +49,12 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
                   className="btn btn-outline-primary btn-md"
                 >
                   Add Expense
+                </Link>
+                <Link
+                  to={`/settleExpense/${group._id}`}
+                  className="btn btn-outline-primary btn-md"
+                >
+                  SettleExpense
                 </Link>
               </Card.Body>
             </Card>

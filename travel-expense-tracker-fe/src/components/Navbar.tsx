@@ -11,10 +11,10 @@ export default function AppNavbar() {
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand as={Link} to="/home">
           <img
             alt=""
-            src="/img/logo.svg"
+            src="../../public/icons/expense-register-svgrepo-com.svg"
             width="30"
             height="30"
             className="d-inline-block align-top"
@@ -27,9 +27,7 @@ export default function AppNavbar() {
         <Nav.Link as={Link} to="/createGroup">
           Create Group
         </Nav.Link>
-        <Nav.Link as={Link} to="/groups">
-          Group
-        </Nav.Link>
+
         <Nav.Link as={Link} to="/home">
           Home
         </Nav.Link>

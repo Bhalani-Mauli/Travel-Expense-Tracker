@@ -16,8 +16,8 @@ export interface ExpenseData {
   description: string;
   currency: string;
   paidBy: string;
-  totalAmount: string;
-  amountPerUser: string;
+  totalAmount: number;
+  amountPerUser: number;
   groupId: string;
 }
 
@@ -28,9 +28,9 @@ const AddExpense = () => {
     category: "General",
     description: "",
     currency: "EUR",
-    paidBy: "", // Add logic to set the paidBy user
+    paidBy: "",
     totalAmount: 0,
-    amountPerUser: "",
+    amountPerUser: 0,
     groupId: groupId ?? "",
   });
 
