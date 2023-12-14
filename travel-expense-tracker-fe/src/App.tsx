@@ -59,7 +59,7 @@ function App() {
             }
           />
           <Route
-            path="/group"
+            path="/group/:id"
             element={
               <IsPrivate>
                 <Group />
@@ -67,7 +67,7 @@ function App() {
             }
           />
           <Route
-            path="/addExpense"
+            path="/addExpense/:groupId"
             element={
               <IsPrivate>
                 <AddExpense />

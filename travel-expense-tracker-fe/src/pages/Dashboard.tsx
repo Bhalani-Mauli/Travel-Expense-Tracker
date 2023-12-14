@@ -1,7 +1,25 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Button, Card } from "react-bootstrap";
+
 import GroupCard from "./GroupCard";
+import { Group } from "../types/api";
+import { fetchGroups } from "../apis/apis";
 
 const Dashboard: React.FC = () => {
+  const [groups, setGroups] = useState<Group[]>();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await fetchGroups();
+        setGroups(response.data);
+      } catch (error: any) {
+        console.error("Error fetching groups:", error.message);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <Card style={{ backgroundColor: "rgb(209, 233, 252)" }}>
@@ -24,7 +42,8 @@ const Dashboard: React.FC = () => {
           </div>
         </Card.Body>
       </Card>
-      <GroupCard />
+      {groups &&
+        groups.map((group) => <GroupCard key={group._id} group={group} />)}
     </>
   );
 };

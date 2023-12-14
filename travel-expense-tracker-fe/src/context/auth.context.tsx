@@ -6,14 +6,13 @@ import {
   useContext,
 } from "react";
 import axios, { AxiosResponse } from "axios";
+import { authVerify } from "../apis/apis";
 
-const API_URL = import.meta.env.API_URL || "http://localhost:8080/api";
-
-interface User {
+const API_URL = import.meta.env.VITE_API_URL;
+export interface User {
   username: string;
   email: string;
 }
-
 export interface AuthContextProps {
   isLoggedIn: boolean;
   isLoading: boolean;
@@ -21,14 +20,16 @@ export interface AuthContextProps {
   storeToken: (token: string) => void;
   authenticateUser: () => void;
   logOutUser: () => void;
+  getToken: () => string;
 }
 
-const defaultAuthContent = {
+const defaultAuthContent: AuthContextProps = {
   isLoggedIn: false,
   isLoading: true,
-  storeToken: (token: string) => token,
+  storeToken: (_token: string) => {},
   authenticateUser: () => {},
   logOutUser: () => {},
+  getToken: () => "",
 };
 
 const AuthContext = createContext<AuthContextProps>(defaultAuthContent);
@@ -50,10 +51,7 @@ function AuthProviderWrapper(props: AuthProviderWrapperProps) {
     const storedToken = localStorage.getItem("authToken");
 
     if (storedToken) {
-      axios
-        .get<User>(`${API_URL}/auth/login`, {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        })
+      authVerify()
         .then((response: AxiosResponse<User>) => {
           setIsLoggedIn(true);
           setIsLoading(false);
@@ -71,13 +69,19 @@ function AuthProviderWrapper(props: AuthProviderWrapperProps) {
     }
   };
 
+  const getToken = () => {
+    return localStorage.getItem("authToken") ?? "";
+  };
+
   const removeToken = () => {
     localStorage.removeItem("authToken");
   };
 
   const logOutUser = () => {
     removeToken();
-    authenticateUser();
+    setIsLoggedIn(false);
+    setIsLoading(false);
+    setUser(undefined);
   };
 
   useEffect(() => {
@@ -93,6 +97,7 @@ function AuthProviderWrapper(props: AuthProviderWrapperProps) {
         storeToken,
         authenticateUser,
         logOutUser,
+        getToken,
       }}
     >
       {props.children}
