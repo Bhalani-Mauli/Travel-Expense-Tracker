@@ -1,9 +1,14 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import { signup } from "../apis/apis";
 
-const API_URL = import.meta.env.API_URL ?? "http://localhost:8080";
+export interface SignupPayload {
+  email: string;
+  password: string;
+  username: string;
+}
 
 const Signup = () => {
   const [email, setEmail] = useState<string>("");
@@ -27,13 +32,8 @@ const Signup = () => {
 
     const requestBody = { email, password, username };
 
-    const headers = {
-      "Access-Control-Allow-Origin": "*",
-    };
     try {
-      await axios.post(`${API_URL}/api/auth/signup`, requestBody, {
-        headers: headers,
-      });
+      await signup(requestBody);
       navigate("/login");
     } catch (error: any) {
       const axiosError = error as AxiosError<any>;

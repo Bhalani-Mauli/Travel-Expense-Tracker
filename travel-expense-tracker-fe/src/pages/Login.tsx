@@ -1,15 +1,14 @@
-import { useState, useContext, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosResponse } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
-import { AuthContext, AuthContextProps } from "../context/auth.context";
+import { useAuth } from "../context/auth.context";
 
 interface LoginResponse {
   authToken: string;
 }
 
-const API_URL: string = import.meta.env.VITE_API_URL ?? "http://localhost:8080";
-console.log(API_URL, import.meta.env);
+const API_URL: string = import.meta.env.VITE_API_URL;
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -17,7 +16,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
-  const { storeToken } = useContext<AuthContextProps>(AuthContext);
+  const { storeToken, authenticateUser } = useAuth();
 
   const navigate = useNavigate();
 
@@ -25,10 +24,6 @@ export default function Login() {
     setEmail(e.target.value);
   const handlePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
-
-  const authenticateUser = () => {
-    // Implement your authentication logic here if needed
-  };
 
   const handleLoginSubmit = (e: FormEvent) => {
     e.preventDefault();

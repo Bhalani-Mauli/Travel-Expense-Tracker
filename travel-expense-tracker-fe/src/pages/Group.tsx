@@ -1,11 +1,39 @@
 import GroupCard from "./GroupCard";
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Stack } from "react-bootstrap";
+import { getExpensesByGroup, getGroupById } from "../apis/apis";
+import { useParams } from "react-router";
+import { Expense, Group } from "../types/api";
 
-const Group = () => {
+const GroupPage = () => {
+  const [group, setGroup] = useState<Group>();
+  const [expenses, setExpenses] = useState<Expense[]>();
+  const { id = "" } = useParams();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [groupRes, expenseRes] = await Promise.all([
+          getGroupById(id),
+          getExpensesByGroup(id),
+        ]);
+        setGroup(groupRes.data);
+        setExpenses(expenseRes.data);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
+  if (!group) {
+    return <>loading</>;
+  }
+  // console.log(group);
+  // return <div>{group.name}</div>;
   return (
     <div>
       Group
-      <GroupCard />
+      <GroupCard group={group} />
       <Container className="mt-4">
         <Row>
           <Col xs={12} md={4}>
@@ -113,7 +141,15 @@ const Group = () => {
         </Row>
         <Stack className="css-5fjfy4">
           <span className="MuiTypography-root MuiTypography-subtitle MuiTypography-noWrap css-lmx3z2">
-            Group Expenses
+            {(expenses ?? []).length > 0 &&
+              expenses!.map((expense) => (
+                <div>
+                  <li>Paid By: {expense.paidBy}</li>
+                  <li>Total amt: {expense.totalAmount}</li>
+                  <li>Amt per user:{expense.amountPerUser}</li>
+                  <hr />
+                </div>
+              ))}
           </span>
           <hr className="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem css-1gtd105" />
           <span className="MuiTypography-root MuiTypography-subtitle MuiTypography-noWrap css-1t58pc5">
@@ -142,4 +178,4 @@ const Group = () => {
     </div>
   );
 };
-export default Group;
+export default GroupPage;

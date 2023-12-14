@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -21,10 +21,18 @@ export default function AppNavbar() {
           />
           Travel expense tracker
         </Navbar.Brand>
-        <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
-        <Nav.Link href="/CreateGroup">Create Group</Nav.Link>
-        <Nav.Link href="/Group">Group</Nav.Link>
-        <Nav.Link href="/home">Home</Nav.Link>
+        <Nav.Link as={Link} to="/dashboard">
+          Dashboard
+        </Nav.Link>
+        <Nav.Link as={Link} to="/createGroup">
+          Create Group
+        </Nav.Link>
+        <Nav.Link as={Link} to="/groups">
+          Group
+        </Nav.Link>
+        <Nav.Link as={Link} to="/home">
+          Home
+        </Nav.Link>
 
         {!isLoggedIn ? (
           <div>
