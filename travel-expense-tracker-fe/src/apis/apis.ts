@@ -4,6 +4,7 @@ import { ExpenseData } from "../pages/AddExpense";
 import { GroupPayload } from "../pages/CreateGroup";
 import { SignupPayload } from "../pages/Signup";
 import { User } from "../context/auth.context";
+import { SettleData } from "../pages/SettleExpense";
 
 const token = localStorage.getItem("authToken");
 const API_URL = import.meta.env.VITE_API_URL;
@@ -57,8 +58,8 @@ const getExpensesByGroup = (groupId: any) => {
   });
 };
 
-const settleExpense = (groupId: string, expenseData: ExpenseData) => {
-  return axios.post(`${API_URL}/settle/${groupId}`, expenseData, {
+const settleExpense = (groupId: string, settleData: SettleData) => {
+  return axios.post(`${API_URL}/settle/${groupId}`, settleData, {
     headers: { Authorization: `Bearer ${token}` },
   });
 };

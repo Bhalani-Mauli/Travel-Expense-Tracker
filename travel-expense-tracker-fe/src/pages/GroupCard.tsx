@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Group } from "../types/api";
 import { useAuth } from "../context/auth.context";
+import "./styles/groupCard.css";
 
 interface GroupCardProps {
   group: Group;
@@ -35,7 +36,6 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
                     {group.description}
                   </h6>
                 </div>
-                {/* ... (other details of a group) */}
                 <div className="stack">
                   <p className="card-text">
                     <b>Settled</b>
@@ -44,18 +44,20 @@ const GroupCard: React.FC<GroupCardProps> = ({ group }) => {
                     <b>You are owed : {owed}</b>
                   </p>
                 </div>
-                <Link
-                  to={`/addExpense/${group._id}`}
-                  className="btn btn-outline-primary btn-md"
-                >
-                  Add Expense
-                </Link>
-                <Link
-                  to={`/settleExpense/${group._id}`}
-                  className="btn btn-outline-primary btn-md"
-                >
-                  SettleExpense
-                </Link>
+                <div className="card-actionbtn-wrapper">
+                  <Link
+                    to={`/addExpense/${group._id}`}
+                    className="btn btn-outline-primary btn-md"
+                  >
+                    Add Expense
+                  </Link>
+                  <Link
+                    to={`/settleExpense/${group._id}`}
+                    className="btn btn-outline-primary btn-md"
+                  >
+                    SettleExpense
+                  </Link>
+                </div>
               </Card.Body>
             </Card>
           </Link>

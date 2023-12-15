@@ -65,14 +65,11 @@ router.post(
   "/",
   isAuthenticated,
   (req: Request, res: Response, next: NextFunction) => {
-    console.log("hello world1--");
-
     const { name, members } = req.body;
     const split = members.reduce((acc: LooseObject, curr: string) => {
       acc[curr] = 0;
       return acc;
     }, {});
-    console.log("hello world");
 
     Group.create({
       name,

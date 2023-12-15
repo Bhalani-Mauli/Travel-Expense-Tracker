@@ -1,10 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import Expense from "../models/expense.model";
-import { DBRef, ObjectId } from "mongodb";
 import { isValidObjectId } from "mongoose";
 import Group from "../models/Group.model";
 import { isAuthenticated } from "../middleware/jwt.middleware";
 import { AuthenticatedRequest } from "./auth.routes";
+import { roundNumber } from "../utils/mathUtils";
 const router = express.Router();
 
 const updateGroupTotal = async (groupId: string, difference: number) => {
@@ -108,9 +108,9 @@ router.post("/", async (req: Request, res: Response, next: NextFunction) => {
   group.total! += +totalAmount;
   Object.keys(splitMemberDb).forEach((member) => {
     if (member === paidBy) {
-      splitMemberDb[member] += +totalAmount - amountPerUser;
+      splitMemberDb[member] += roundNumber(+totalAmount - amountPerUser);
     } else {
-      splitMemberDb[member] -= amountPerUser;
+      splitMemberDb[member] -= roundNumber(amountPerUser);
     }
   });
   group.markModified("split");

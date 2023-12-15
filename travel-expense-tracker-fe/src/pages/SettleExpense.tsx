@@ -12,14 +12,20 @@ import { getGroupById, settleExpense } from "../apis/apis";
 import { useParams } from "react-router-dom";
 import { currencies } from "../utils/constant";
 
-interface settleData {
+interface SettleDataState {
   currency: string;
+}
+export interface SettleData {
+  settleTo: string;
+  settleFrom: string;
+  settleCurrency: string;
+  settleAmount: number;
 }
 
 const SettleExpense = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState<Group>();
-  const [expenseData, setExpenseData] = useState<settleData>({
+  const [expenseData, setExpenseData] = useState<SettleDataState>({
     currency: "EUR",
   });
 
@@ -42,7 +48,6 @@ const SettleExpense = () => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
-    console.log(e.target.value);
     setExpenseData({
       ...expenseData,
       [e.target.name]: e.target.value,
@@ -50,7 +55,6 @@ const SettleExpense = () => {
   };
 
   const handleSelectChange = (fieldName: string, value: string) => {
-    console.log(value);
     setExpenseData({
       ...expenseData,
       [fieldName]: value,
@@ -58,14 +62,8 @@ const SettleExpense = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(user?.email);
-    console.log(group?.members);
-    console.log(expenseData);
     try {
-      await settleExpense({
-        groupId,
-        expenseData,
-      });
+      await settleExpense(groupId!, expenseData);
     } catch (error) {
       console.error("Error settle expense", error);
     }
