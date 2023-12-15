@@ -17,10 +17,11 @@ router.post("/:id", async (req: Request, res: Response) => {
     .then(async (dbRes: any) => {
       const groupRes = await Group.findById({ _id: id });
       if (!groupRes) throw Error("group does not exist");
-      const result = groupRes?.split[settleTo] - settleAmount;
+      const result = +groupRes?.split[settleTo] - Number(settleAmount);
       groupRes.split[settleTo] = result;
 
-      const newSettleFromAmount = groupRes?.split[settleFrom] + settleAmount;
+      const newSettleFromAmount =
+        +groupRes?.split[settleFrom] + Number(settleAmount);
       groupRes.split[settleFrom] = newSettleFromAmount;
       groupRes.markModified("split");
       await groupRes?.save();
