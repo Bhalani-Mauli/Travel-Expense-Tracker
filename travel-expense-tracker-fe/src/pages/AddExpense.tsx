@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Form,
@@ -19,6 +19,7 @@ export interface ExpenseData {
   totalAmount: number;
   amountPerUser: number;
   groupId: string;
+  createdAt?: Date;
 }
 
 const AddExpense = () => {
@@ -47,9 +48,7 @@ const AddExpense = () => {
     })();
   }, []);
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: any) => {
     e.preventDefault();
     setExpenseData({
       ...expenseData,
@@ -110,7 +109,7 @@ const AddExpense = () => {
             variant="outline-secondary"
             title={expenseData.currency}
             id="input-group-dropdown-1"
-            onSelect={(value) => handleSelectChange("currency", value)}
+            onSelect={(value) => handleSelectChange("currency", value ?? "")}
           >
             {currencies.map((currency) => (
               <Dropdown.Item key={currency} eventKey={currency}>

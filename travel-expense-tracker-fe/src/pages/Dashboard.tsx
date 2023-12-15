@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 import GroupCard from "./GroupCard";
 import { Group } from "../types/api";
@@ -30,7 +29,6 @@ const Dashboard: React.FC = () => {
               Keep track of shared expenses and settle your corresponding
               balances in a convenient and personalized way.
             </Card.Text>
-            <Button variant="primary">View Group</Button>
           </div>
           <div className="ml-3">
             <Card.Img
@@ -42,8 +40,12 @@ const Dashboard: React.FC = () => {
           </div>
         </Card.Body>
       </Card>
-      {groups &&
-        groups.map((group) => <GroupCard key={group._id} group={group} />)}
+      <div className="container mt-4">
+        <div className="row">
+          {groups &&
+            groups.map((group) => <GroupCard key={group._id} group={group} />)}
+        </div>
+      </div>
     </>
   );
 };

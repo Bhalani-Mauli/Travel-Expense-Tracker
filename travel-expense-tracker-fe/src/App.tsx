@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Container>
+      <Container className="mt-3">
         <Routes>
           <Route
             path="/signup"
@@ -81,6 +81,14 @@ function App() {
               <IsPrivate>
                 <SettleExpense />
               </IsPrivate>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <IsAnon>
+                <Login />
+              </IsAnon>
             }
           />
         </Routes>
