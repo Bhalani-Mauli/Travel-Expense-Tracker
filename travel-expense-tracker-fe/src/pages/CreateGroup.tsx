@@ -5,7 +5,8 @@ import { useAuth } from "../context/auth.context";
 import { createGroup } from "../apis/apis";
 import { currencies } from "../utils/constant";
 import { uuid } from "../utils/utils";
-import "./createGroup.css";
+import "./styles/createGroup.css";
+
 export interface GroupPayload {
   name: string;
   members: string[];

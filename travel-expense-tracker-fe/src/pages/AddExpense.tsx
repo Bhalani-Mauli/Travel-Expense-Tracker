@@ -51,7 +51,6 @@ const AddExpense = () => {
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     e.preventDefault();
-    console.log(e);
     setExpenseData({
       ...expenseData,
       [e.target.name]: e.target.value,
@@ -59,7 +58,6 @@ const AddExpense = () => {
   };
 
   const handleSelectChange = (fieldName: string, value: string) => {
-    console.log(value);
     setExpenseData({
       ...expenseData,
       [fieldName]: value,
