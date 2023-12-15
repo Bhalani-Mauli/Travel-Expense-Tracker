@@ -31,7 +31,7 @@ const signup = (data: SignupPayload) => {
   const headers = {
     "Access-Control-Allow-Origin": "*",
   };
-  return axios.post(`${API_URL}/api/auth/signup`, data, {
+  return axios.post(`${API_URL}/auth/signup`, data, {
     headers: headers,
   });
 };
