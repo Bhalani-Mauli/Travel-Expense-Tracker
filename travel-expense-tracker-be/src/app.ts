@@ -9,6 +9,7 @@ import expenseRoutes from "./routes/expense.routes";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import groupRoutes from "./routes/group.routes";
+import settleRoutes from "./routes/settle.routes";
 import { isAuthenticated } from "./middleware/jwt.middleware";
 import cors from "cors";
 
@@ -31,6 +32,7 @@ app.use("/api/expenses", expenseRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/groups", groupRoutes);
+app.use("/api/settle", settleRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 handleErrors(app);
