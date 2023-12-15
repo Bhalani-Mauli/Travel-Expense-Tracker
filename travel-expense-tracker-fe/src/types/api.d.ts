@@ -20,4 +20,10 @@ export interface Expense {
   groupId: string;
   __v: number;
   userInfo: any[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Settlement {
+  data: Array<Array<number | string>>;
 }

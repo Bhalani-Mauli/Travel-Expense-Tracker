@@ -5,10 +5,9 @@ import {
   ReactNode,
   useContext,
 } from "react";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { authVerify } from "../apis/apis";
 
-const API_URL = import.meta.env.VITE_API_URL;
 export interface User {
   username: string;
   email: string;

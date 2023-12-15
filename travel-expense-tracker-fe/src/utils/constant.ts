@@ -22,3 +22,9 @@ export const categories = [
 ];
 
 export const currencies = ["EUR", "INR", "USD"];
+
+export const currenciesLogoMap = {
+  EUR: "€",
+  INR: "₹",
+  USD: "$",
+};

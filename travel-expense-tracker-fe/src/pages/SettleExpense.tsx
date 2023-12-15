@@ -6,14 +6,16 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { useAuth } from "../context/auth.context";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Group } from "../types/api";
 import { getGroupById, settleExpense } from "../apis/apis";
 import { useParams } from "react-router-dom";
 import { currencies } from "../utils/constant";
 
 interface SettleDataState {
-  currency: string;
+  settleCurrency: string;
+  settleTo: string;
+  settleAmount: number;
 }
 export interface SettleData {
   settleTo: string;
@@ -25,8 +27,10 @@ export interface SettleData {
 const SettleExpense = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState<Group>();
-  const [expenseData, setExpenseData] = useState<SettleDataState>({
-    currency: "EUR",
+  const [settlementData, setExpenseData] = useState<SettleDataState>({
+    settleCurrency: "EUR",
+    settleTo: "",
+    settleAmount: 0,
   });
 
   const { user } = useAuth();
@@ -44,26 +48,30 @@ const SettleExpense = () => {
     })();
   }, []);
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleInputChange = (e: any) => {
     e.preventDefault();
     setExpenseData({
-      ...expenseData,
+      ...settlementData,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleSelectChange = (fieldName: string, value: string) => {
     setExpenseData({
-      ...expenseData,
+      ...settlementData,
       [fieldName]: value,
     });
   };
 
   const handleSubmit = async () => {
+    const data = {
+      settleTo: settlementData.settleTo,
+      settleFrom: user?.email ?? "",
+      settleCurrency: settlementData.settleCurrency ?? "",
+      settleAmount: settlementData.settleAmount,
+    };
     try {
-      await settleExpense(groupId!, expenseData);
+      await settleExpense(groupId!, data);
     } catch (error) {
       console.error("Error settle expense", error);
     }
@@ -82,7 +90,7 @@ const SettleExpense = () => {
         <Form.Group className="mb-3" controlId="formGridAddress1">
           <Form.Label>To</Form.Label>
           <Form.Select
-            name="To"
+            name="settleTo"
             defaultValue="Choose..."
             onChange={handleInputChange}
           >
@@ -99,9 +107,9 @@ const SettleExpense = () => {
         <InputGroup className="mb-3">
           <DropdownButton
             variant="outline-secondary"
-            title={expenseData.currency}
+            title={settlementData.settleCurrency}
             id="input-group-dropdown-1"
-            onSelect={(value) => handleSelectChange("currency", value)}
+            onSelect={(value) => handleSelectChange("currency", value ?? "")}
           >
             {currencies.map((currency) => (
               <Dropdown.Item key={currency} eventKey={currency}>
@@ -113,7 +121,7 @@ const SettleExpense = () => {
           <Form.Control
             onChange={handleInputChange}
             type="number"
-            name="totalAmount"
+            name="settleAmount"
             aria-label="Text input with dropdown button"
           />
         </InputGroup>

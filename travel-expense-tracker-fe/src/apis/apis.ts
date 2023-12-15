@@ -64,6 +64,12 @@ const settleExpense = (groupId: string, settleData: SettleData) => {
   });
 };
 
+const getAllSettlements = (groupId: string) => {
+  return axios.get(`${API_URL}/settle/${groupId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
 export {
   fetchGroups,
   addExpense,
@@ -73,4 +79,5 @@ export {
   authVerify,
   getGroupById,
   settleExpense,
+  getAllSettlements,
 };

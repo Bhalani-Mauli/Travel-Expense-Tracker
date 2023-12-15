@@ -6,12 +6,12 @@ import Navbar from "react-bootstrap/Navbar";
 import { useAuth } from "../context/auth.context";
 
 export default function AppNavbar() {
-  const { isLoggedIn, logOutUser } = useAuth();
+  const { isLoggedIn, logOutUser, user } = useAuth();
 
   return (
     <Navbar className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand as={Link} to="/home">
+        <Navbar.Brand as={Link} to="/home" className="d-flex gap-3">
           <img
             alt=""
             src="../../public/icons/expense-register-svgrepo-com.svg"
@@ -21,17 +21,17 @@ export default function AppNavbar() {
           />
           Travel expense tracker
         </Navbar.Brand>
-        <Nav.Link as={Link} to="/dashboard">
-          Dashboard
-        </Nav.Link>
-        <Nav.Link as={Link} to="/createGroup">
-          Create Group
-        </Nav.Link>
-
-        <Nav.Link as={Link} to="/home">
-          Home
-        </Nav.Link>
-
+        <div className="d-flex gap-4">
+          <Nav.Link as={Link} to="/home">
+            Home
+          </Nav.Link>
+          <Nav.Link as={Link} to="/dashboard">
+            Dashboard
+          </Nav.Link>
+          <Nav.Link as={Link} to="/createGroup">
+            Create Group
+          </Nav.Link>
+        </div>
         {!isLoggedIn ? (
           <div>
             <NavLink to="/signup">
@@ -42,7 +42,9 @@ export default function AppNavbar() {
             </NavLink>
           </div>
         ) : (
-          <Button onClick={logOutUser}>Logout</Button>
+          <div className="d-flex gap-4">
+            {user?.email} <Button onClick={logOutUser}>Logout</Button>
+          </div>
         )}
       </Container>
     </Navbar>
